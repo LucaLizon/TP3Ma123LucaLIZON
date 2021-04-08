@@ -19,4 +19,4 @@ def Newton(f,fd,x0,epsilon,Nitermax):
         n+=1
     return xnew 
 
-print(Newton(f3.f1,f3.f1der,10**-7,-10,30))
+print(Newton(f3.f1,f3.f1der,-8,10,30))
