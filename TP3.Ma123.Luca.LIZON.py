@@ -8,11 +8,11 @@ Created on Thu Apr  8 22:46:18 2021
 import fonctions3 as f3
 
 def Newton(f,fd,x0,epsilon,Nitermax):
-    n=0
+    n = 0
     xold = x0
     erreur = f(xold) - xold
-    while abs(erreur)> epsilon and n<Nitermax:
-        xnew = xold-(f(xold)/fd(xold))
+    while abs(erreur) > epsilon and n < Nitermax:
+        xnew = xold - (f(xold)/fd(xold))
         erreur = xnew - xold
         xold = xnew
         print(n)
