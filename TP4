@@ -1,3 +1,175 @@
-testvv
+import math as m
+import matplotlib.pyplot as plt
 
-vv
+
+"""
+Fonctions :
+"""
+
+def f0(x):
+    return 2*x-1-m.sin(x)
+
+def f0der(x):
+    return 2-m.cos(x)
+
+def g0(x):
+    return (1+m.sin(x))/2
+
+
+
+def f2(x):
+    return x-3*m.cos(x)+2
+
+def f2der(x):
+    return 1 + 3*m.sin(x)
+    
+def g2(x):
+    return (m.acos(x)+2)/3
+
+
+
+
+def f5(x):
+    return 2*m.tan(x)-x-5
+
+def f5der(x):
+    return 2/(m.cos(x)**2) - 1
+    
+def g5(x):
+    return m.atan((x+5)/2)
+
+
+
+
+def f6(x):
+    return m.exp(x)-x**2-3
+
+def f6der(x):
+    return m.exp(x)-2*x
+
+def g6(x):
+    return m.log((x**2)+3)
+
+
+
+
+
+
+
+"""
+Méthodes de résolution :
+"""
+
+
+
+def Point_Fixe(g, x0, epsilon, Nitermax):
+    
+    global p_n
+    global p_xn
+    global p_en
+    
+    p_n = []
+    p_xn = []
+    p_en = []
+    
+    n=0
+    xold = x0
+    erreur = g(xold) - xold
+    while abs(erreur)>epsilon and n<Nitermax:
+        xnew = g(xold)
+        erreur = xnew - xold
+        xold = xnew
+        #print(n)
+        p_n.append(n)
+        p_xn.append(xnew)
+        p_en.append(abs(erreur))
+        n+=1
+    plt.semilogy(p_n, p_en, 'k')
+    return p_n, p_xn, p_en 
+
+def Newton(f, fder, x0, epsilon, Nitermax):
+    
+    global n_n
+    global n_xn
+    global n_en
+    
+    n_n = []
+    n_xn = []
+    n_en = []
+    
+    n=0
+    xold = x0
+    erreur = f(xold) - xold
+    while abs(erreur)>epsilon and n<Nitermax:
+        xnew = xold - (f(xold)/fder(xold))
+        erreur = xnew - xold
+        xold = xnew
+        #print(n)
+        n_n.append(n)
+        n_xn.append(xnew)
+        n_en.append(abs(erreur))
+        n+=1
+    plt.semilogy(n_n, n_en, 'b')
+    return n_n, n_xn, n_en 
+
+def Dichotomie(f, a0, b0, epsilon, Nitermax):
+    
+    global d_n
+    global d_xn
+    global d_en
+    
+    d_n = []
+    d_xn = []
+    d_en = []
+    
+    n=0
+    while abs(b0 - a0) > epsilon and n<Nitermax:
+        m = (a0 + b0) / 2
+        if (f(a0)*f(m) <= 0):
+           b0 = m
+           d_n.append(n)
+           d_xn.append(b0)
+           d_en.append(abs(b0 - a0))
+           n = n + 1
+           #print(n)
+        else:
+           a0 = m
+           d_n.append(n)
+           d_xn.append(a0)
+           d_en.append(abs(b0 - a0))
+           n = n + 1
+           #print(n)
+    plt.semilogy(d_n, d_en, 'g')
+    return d_n, d_xn, d_en
+
+def Secante(f, x0, x1, epsilon, Nitermax):
+    
+    global s_n
+    global s_xn
+    global s_en
+    
+    s_n = []
+    s_xn = []
+    s_en = []
+    
+    n=0
+    while (abs(x1 - x0) > epsilon) and n<Nitermax:
+        x2 = x1 - f(x1) * (x1 - x0) / float(f(x1) - f(x0))
+        x0, x1 = x1, x2
+        n = n + 1
+        #print(n)
+        s_n.append(n)
+        s_xn.append(x2)
+        s_en.append(abs(x1 - x0))
+    plt.semilogy(s_n, s_en, 'r')
+    return s_n, s_xn, s_en
+
+"""
+Interface graphique :
+"""
+
+def graph(f, fder, g, x0, x1, a0, b0, epsilon, Nitermax):
+    Point_Fixe(g, x0, epsilon, Nitermax)
+    Newton(f, fder, x0, epsilon, Nitermax)
+    Dichotomie(f, a0, b0, epsilon, Nitermax)
+    Secante(f, x0, x1, epsilon, Nitermax)
