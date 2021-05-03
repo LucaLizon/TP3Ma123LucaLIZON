@@ -80,7 +80,7 @@ def Point_Fixe(g, x0, epsilon, Nitermax):
         xnew = g(xold)
         erreur = xnew - xold
         xold = xnew
-        #print(n)
+        print(n)
         p_n.append(n)
         p_en.append(abs(erreur))
         p_xn.append(xnew)
@@ -107,7 +107,7 @@ def Newton(f, fder, x0, epsilon, Nitermax):
         xnew = xold - (f(xold) / fder(xold))
         erreur = xnew - xold
         xold = xnew
-        #print(n)
+        print(n)
         n_n.append(n)
         n_en.append(abs(erreur))
         n_xn.append(xnew)
@@ -136,14 +136,14 @@ def Dichotomie(f, a0, b0, epsilon, Nitermax):
            d_en.append(abs(b0 - a0))
            d_xn.append(b0)
            n = n + 1
-           #print(n)
+           print(n)
         else:
            a0 = m
            d_n.append(n)
            d_en.append(abs(b0 - a0))
            d_xn.append(a0)
            n = n + 1
-           #print(n)
+           print(n)
     plt.semilogy(d_n, d_en, 'g')
     return d_n, d_xn, d_en
 
@@ -164,7 +164,7 @@ def Secante(f, x0, x1, epsilon, Nitermax):
         x2 = x1 - f(x1) * (x1 - x0) / float(f(x1) - f(x0))
         x0, x1 = x1, x2
         n = n + 1
-        #print(n)
+        print(n)
         s_n.append(n)
         s_en.append(abs(x1 - x0))
         s_xn.append(x2)
