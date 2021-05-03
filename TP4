@@ -65,12 +65,13 @@ Méthodes de résolution :
 def Point_Fixe(g, x0, epsilon, Nitermax):
     
     global p_n
-    global p_xn
     global p_en
+    global p_xn
     
     p_n = []
-    p_xn = []
     p_en = []
+    p_xn = []
+    
     
     n=0
     xold = x0
@@ -81,8 +82,8 @@ def Point_Fixe(g, x0, epsilon, Nitermax):
         xold = xnew
         #print(n)
         p_n.append(n)
-        p_xn.append(xnew)
         p_en.append(abs(erreur))
+        p_xn.append(xnew)
         n+=1
     plt.semilogy(p_n, p_en, 'k')
     return p_n, p_xn, p_en 
@@ -90,24 +91,26 @@ def Point_Fixe(g, x0, epsilon, Nitermax):
 def Newton(f, fder, x0, epsilon, Nitermax):
     
     global n_n
-    global n_xn
     global n_en
+    global n_xn
+    
     
     n_n = []
-    n_xn = []
     n_en = []
+    n_xn = []
+    
     
     n=0
     xold = x0
     erreur = f(xold) - xold
     while abs(erreur)>epsilon and n<Nitermax:
-        xnew = xold - (f(xold)/fder(xold))
+        xnew = xold - (f(xold) / fder(xold))
         erreur = xnew - xold
         xold = xnew
         #print(n)
         n_n.append(n)
-        n_xn.append(xnew)
         n_en.append(abs(erreur))
+        n_xn.append(xnew)
         n+=1
     plt.semilogy(n_n, n_en, 'b')
     return n_n, n_xn, n_en 
@@ -115,12 +118,14 @@ def Newton(f, fder, x0, epsilon, Nitermax):
 def Dichotomie(f, a0, b0, epsilon, Nitermax):
     
     global d_n
-    global d_xn
     global d_en
+    global d_xn
+    
     
     d_n = []
-    d_xn = []
     d_en = []
+    d_xn = []
+    
     
     n=0
     while abs(b0 - a0) > epsilon and n<Nitermax:
@@ -128,15 +133,15 @@ def Dichotomie(f, a0, b0, epsilon, Nitermax):
         if (f(a0)*f(m) <= 0):
            b0 = m
            d_n.append(n)
-           d_xn.append(b0)
            d_en.append(abs(b0 - a0))
+           d_xn.append(b0)
            n = n + 1
            #print(n)
         else:
            a0 = m
            d_n.append(n)
-           d_xn.append(a0)
            d_en.append(abs(b0 - a0))
+           d_xn.append(a0)
            n = n + 1
            #print(n)
     plt.semilogy(d_n, d_en, 'g')
@@ -145,12 +150,14 @@ def Dichotomie(f, a0, b0, epsilon, Nitermax):
 def Secante(f, x0, x1, epsilon, Nitermax):
     
     global s_n
-    global s_xn
     global s_en
+    global s_xn
+    
     
     s_n = []
-    s_xn = []
     s_en = []
+    s_xn = []
+    
     
     n=0
     while (abs(x1 - x0) > epsilon) and n<Nitermax:
@@ -159,8 +166,8 @@ def Secante(f, x0, x1, epsilon, Nitermax):
         n = n + 1
         #print(n)
         s_n.append(n)
-        s_xn.append(x2)
         s_en.append(abs(x1 - x0))
+        s_xn.append(x2)
     plt.semilogy(s_n, s_en, 'r')
     return s_n, s_xn, s_en
 
